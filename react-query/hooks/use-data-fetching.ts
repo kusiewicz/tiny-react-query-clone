@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useEffect, useCallback } from "react";
-import { useQueryClient } from "./react-query-provider";
+import { useQueryClient } from "../context/react-query-provider";
 
 interface FetchOptions {
   cacheTime?: number;
@@ -32,7 +34,7 @@ const DEFAULT_DEDUPING_INTERVAL = 2000; // 2 seconds
  *   mutate: (data: T | ((prev: T | null) => T)) => void;
  * }} Returns fetch state (data, error, loading flags) plus `refetch` and `mutate` methods.
  */
-export function useReactQuery<T>(
+export function useDataFetching<T>(
   url: string,
   queryKey: string,
   options: FetchOptions = {}

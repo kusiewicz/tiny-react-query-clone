@@ -1,5 +1,7 @@
+"use client";
+
 import { createContext, ReactNode, useContext } from "react";
-import { QueryClient } from "./query-client";
+import { QueryClient } from "../core/query-client";
 
 const QueryClientContext = createContext<QueryClient | null>(null);
 
