@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# tiny-react-query-clone
 
-## Getting Started
+Lightweight custom implementation of a React Query-like data fetching and caching library.  
+Supports caching, deduplication, retries, optimistic updates, and manual refetching.
 
-First, run the development server:
+## Features
+
+- ✅ Cache management with expiration (cacheTime)
+- 🔁 Deduplication of simultaneous requests (dedupingInterval)
+- ♻️ Automatic retries on fetch errors
+- 🧬 Optimistic updates with mutate
+- 🔥 Manual refetching
+- 🎯 Fine-grained control with fetch options
+
+## Demo
+
+The project includes a usage example (`usage-example.tsx`) fetching data from SWAPI (https://www.swapi.tech/).
+
+![image](https://github.com/user-attachments/assets/aed9482c-0c2b-4ec0-804d-18ce22dd615d)
+
+
+## Installation
 
 ```bash
+git clone https://github.com/your-username/tiny-react-query-clone.git
+cd tiny-react-query-clone
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Wrap your app with `ReactQueryProvider` and pass in a `QueryClient`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+import { ReactQueryProvider, QueryClient } from "./context/react-query-provider";
 
-## Learn More
+const client = new QueryClient();
 
-To learn more about Next.js, take a look at the following resources:
+export default function App() {
+  return (
+    <ReactQueryProvider client={client}>
+      <YourComponents />
+    </ReactQueryProvider>
+  );
+}
+```
+<br>
+Fetch data inside components using `useDataFetching`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+const { data, error, isLoading, refetch, mutate } = useDataFetching(
+  "https://api.example.com/item/1",
+  "item-1"
+);
+```
